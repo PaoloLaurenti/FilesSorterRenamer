@@ -4,13 +4,16 @@
         Title="Files Sorter &amp; Renamer" Height="400" Width="525" WindowStartupLocation="CenterScreen">
     <StackPanel Margin="0,0,0,0">
         <Canvas  VerticalAlignment="Top" Height="206">
-            <Label Content="Select the folder" Height="26" Canvas.Left="10" Canvas.Top="32" Width="175"/>
-            <TextBox TextWrapping="Wrap" Height="23" Canvas.Left="10" Canvas.Top="63" Width="389"/>
-            <Button Content="Select" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="41" RenderTransformOrigin="0.48,0.317" Canvas.Left="420" Canvas.Top="52" IsDefault="True"/>
+            <Label Content="Select the source folder" Height="26" Canvas.Left="10" Canvas.Top="32" Width="175"/>
+            <TextBox x:Name="TxtSourceFolder" TextWrapping="Wrap" Height="23" Canvas.Left="10" Canvas.Top="63" Width="389"/>
+            <Button x:Name="BtnSelectSourceFolder" Content="Select" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="41" RenderTransformOrigin="0.48,0.317" Canvas.Left="420" Canvas.Top="52" IsDefault="True" Click="BtnSelectSourceFolder_Click"/>
+            <Label Content="Select the destination folder" Height="26" Canvas.Left="10" Canvas.Top="119" Width="175"/>
+            <TextBox x:Name="TxtDestinationFolder" TextWrapping="Wrap" Height="23" Canvas.Left="10" Canvas.Top="150" Width="389"/>
+            <Button x:Name="BtnSelectDestinationFolder" Content="Select" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="41" RenderTransformOrigin="0.48,0.317" Canvas.Left="420" Canvas.Top="139" IsDefault="True" Click="BtnSelectDestinationFolder_Click"/>
         </Canvas>
         <Canvas  VerticalAlignment="Bottom">
             <ProgressBar Height="31" Width="490" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="13" Canvas.Top="8"/>
-            <Button Content="Rename!" Height="66" Width="167" Canvas.Left="180" Canvas.Top="75" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Button Content="Execute" Height="66" Width="167" Canvas.Left="180" Canvas.Top="75" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Canvas>
 
     </StackPanel>
