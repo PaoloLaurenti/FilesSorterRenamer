@@ -44,11 +44,26 @@ namespace FilesSorterRenamer
 
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            for (var i = 0; i < 101; i++)
+            var sourceFolderPath = "";
+            var destFolderPath = "";
+
+            TxtSourceFolder.Dispatcher.Invoke(new Action(delegate {
+                sourceFolderPath = TxtSourceFolder.Text;
+            }));
+
+            TxtDestinationFolder.Dispatcher.Invoke(new Action(delegate {
+                destFolderPath = TxtDestinationFolder.Text;
+            }));
+
+            var filesSorterRenamerCommandRequest = new FilesSorterRenamerCommandRequest
             {
-                (sender as BackgroundWorker).ReportProgress(i);
-                Thread.Sleep(100);
-            }
+                SourceFolderPath = sourceFolderPath,
+                DestinationFolderPath = destFolderPath
+            };
+            new FilesSorterRenamerCommand(filesSorterRenamerCommandRequest)
+            {
+                OnPercentageProgressChanged = x => ((BackgroundWorker) sender).ReportProgress(x)
+            }.Execute();
         }
 
         private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
