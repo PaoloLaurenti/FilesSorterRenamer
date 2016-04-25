@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 
@@ -28,6 +29,15 @@ namespace FilesSorterRenamer
 
             if (result == System.Windows.Forms.DialogResult.OK)
                 onFolderSelected(dialog.SelectedPath);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            CanvasFoldersSelection.IsEnabled = false;
+
+            Thread.Sleep(7000);
+
+            CanvasFoldersSelection.IsEnabled = true;
         }
     }
 }
