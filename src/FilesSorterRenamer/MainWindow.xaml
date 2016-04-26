@@ -16,9 +16,9 @@
                 <ProgressBar x:Name="PbStatus" Height="31" Width="490" Value="0"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-10,0,10,0"/>
                 <TextBlock Text="{Binding Value, ElementName=PbStatus, StringFormat=\{0:0\}%}" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Grid>
-            <Button x:Name="BtnExecute" Content="Execute" Height="66" Width="167" Canvas.Left="180" Canvas.Top="75" HorizontalAlignment="Center" VerticalAlignment="Center" Click="BtnExecute_Click" />
+            <Button x:Name="BtnExecute" Content="Execute" Height="66" Width="114" Canvas.Left="143" Canvas.Top="73" HorizontalAlignment="Center" VerticalAlignment="Center" Click="BtnExecute_Click" />
+            <Button x:Name="BtnReset" Content="Reset" Height="66" Width="114" HorizontalAlignment="Center" VerticalAlignment="Center" Click="BtnReset_Click" Canvas.Left="276" Canvas.Top="73" />
         </Canvas>
-
     </StackPanel>
 
 </Window>

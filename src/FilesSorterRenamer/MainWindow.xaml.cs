@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
+using MessageBox = System.Windows.MessageBox;
 
 namespace FilesSorterRenamer
 {
@@ -73,6 +74,7 @@ namespace FilesSorterRenamer
 
         private void WorkerOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
         {
+            MessageBox.Show("Process complete", "Process execution", MessageBoxButton.OK, MessageBoxImage.Information);
             EnableForm();
         }
 
@@ -92,6 +94,13 @@ namespace FilesSorterRenamer
         {
             CanvasFoldersSelection.IsEnabled = false;
             BtnExecute.IsEnabled = false;
+        }
+
+        private void BtnReset_Click(object sender, RoutedEventArgs e)
+        {
+            TxtSourceFolder.Text = "";
+            TxtDestinationFolder.Text = "";
+            PbStatus.Value = 0;
         }
     }
 }

@@ -77,11 +77,7 @@ namespace FilesSorterRenamer
                 });
 
             var subFolders = Directory.GetDirectories(sourceFolderPath, "*.*", SearchOption.TopDirectoryOnly);
-            Array.ForEach(subFolders, x =>
-            {
-                var subFolderName = Path.GetFileName(x);
-                Process(x, Path.Combine(destinationFolderPath, subFolderName), progressTracker);
-            });
+            Array.ForEach(subFolders, x => Process(x, Path.Combine(destinationFolderPath, Path.GetFileName(x)), progressTracker));
         }
     }
 }
