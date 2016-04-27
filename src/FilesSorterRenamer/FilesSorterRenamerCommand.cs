@@ -17,7 +17,7 @@ namespace FilesSorterRenamer
             OnPercentageProgressChanged = x => { };
         }
 
-        public Action<int> OnPercentageProgressChanged { get; set; }
+        internal Action<int> OnPercentageProgressChanged { get; set; }
 
         internal void Execute()
         {
@@ -25,14 +25,9 @@ namespace FilesSorterRenamer
             var progressTracker = new ProgressTracker(allFilesCount, OnPercentageProgressChanged);
             var outputFolderPath = CreateOutputFolder();
 
-            var firstLevelFolders = Directory.GetDirectories(_sourceFolderPath, "*.*", SearchOption.TopDirectoryOnly);
-
-            Array.ForEach(firstLevelFolders, x =>
-            {
-                var destinationFolderName = Path.GetFileName(x);
-                var destinationFolderPath = Path.Combine(outputFolderPath, destinationFolderName);
-                Process(x, destinationFolderPath, progressTracker);
-            });
+            var destinationFolderName = Path.GetFileName(_sourceFolderPath);
+            var destinationFolderPath = Path.Combine(outputFolderPath, destinationFolderName);
+            Process(_sourceFolderPath, destinationFolderPath, progressTracker);
         }
 
         private string CreateOutputFolder()
@@ -66,7 +61,7 @@ namespace FilesSorterRenamer
 
             Directory
                 .GetFiles(sourceFolderPath, "*.*", SearchOption.TopDirectoryOnly)
-                .OrderBy(x => new DirectoryInfo(x).CreationTimeUtc)
+                .OrderBy(x => new DirectoryInfo(x).LastWriteTimeUtc)
                 .ToList()
                 .ForEach(x =>
                 {
