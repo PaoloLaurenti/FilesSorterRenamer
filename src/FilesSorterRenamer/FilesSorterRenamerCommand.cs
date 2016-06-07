@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace FilesSorterRenamer
 {
@@ -23,33 +24,37 @@ namespace FilesSorterRenamer
         {
             var allFilesCount = Directory.GetFiles(_sourceFolderPath, "*.*", SearchOption.AllDirectories).Length;
             var progressTracker = new ProgressTracker(allFilesCount, OnPercentageProgressChanged);
-            var outputFolderPath = CreateOutputFolder();
-
             var destinationFolderName = Path.GetFileName(_sourceFolderPath);
-            var destinationFolderPath = Path.Combine(outputFolderPath, destinationFolderName);
-            Process(_sourceFolderPath, destinationFolderPath, progressTracker);
+            var outputFolderPath = CreateOutputFolder(destinationFolderName);
+
+            //var destinationFolderPath = Path.Combine(outputFolderPath, destinationFolderName);
+            Process(_sourceFolderPath, outputFolderPath, progressTracker);
         }
 
-        private string CreateOutputFolder()
+        private string CreateOutputFolder(string destinationFolderName)
         {
-            var counter = 1;
-            var existingOutputFolders = Directory
-                                        .GetDirectories(_destinationFolderPath, string.Format("{0}*", OutputFolderNamePrefix), SearchOption.TopDirectoryOnly)
-                                        .Select(Path.GetFileName)
-                                        .Select(x => x.Substring(OutputFolderNamePrefix.Length))
-                                        .ToArray();
+            var existingDestinationFolders = Directory
+                                            .GetDirectories(_destinationFolderPath, string.Format("{0}*", destinationFolderName), SearchOption.TopDirectoryOnly)
+                                            .Select(Path.GetFileName)
+                                            .Where(x => IsAnAlreadyExistingDestinationFolder(x, destinationFolderName))
+                                            .ToArray();
 
-            if (existingOutputFolders.Any())
+            var outputFolderPath = Path.Combine(_destinationFolderPath, destinationFolderName);
+
+            if (existingDestinationFolders.Any())
             {
-                var existingMaxOutputFolderCounter = existingOutputFolders.Max(x => int.Parse(x));
-                counter = existingMaxOutputFolderCounter + 1;
+                var counter = existingDestinationFolders.Length;
+                outputFolderPath = string.Format("{0}_{1}", outputFolderPath, counter.ToString().PadLeft(4, '0'));
             }
-
-            var outputFolderPath = Path.Combine(_destinationFolderPath, string.Format("{0}{1}", OutputFolderNamePrefix, counter.ToString().PadLeft(4, '0')));
 
             Directory.CreateDirectory(outputFolderPath);
 
             return outputFolderPath;
+        }
+
+        private static bool IsAnAlreadyExistingDestinationFolder(string folderName, string destinationFolderName)
+        {
+            return Regex.IsMatch(folderName, string.Format("^{0}(_[0-9]+)?$", destinationFolderName));
         }
 
         private static void Process(string sourceFolderPath, string destinationFolderPath, ProgressTracker progressTracker)
