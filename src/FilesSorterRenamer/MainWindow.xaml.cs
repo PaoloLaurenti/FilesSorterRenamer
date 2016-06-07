@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using MessageBox = System.Windows.MessageBox;
@@ -17,7 +16,7 @@ namespace FilesSorterRenamer
         }
 
         private void BtnSelectSourceFolder_Click(object sender, RoutedEventArgs e)
-        {
+        {   
             SelectFolderByDialog(sp => TxtSourceFolder.Text = sp);
         }
 
@@ -74,7 +73,7 @@ namespace FilesSorterRenamer
 
         private void WorkerOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
         {
-            MessageBox.Show("Process complete", "Process execution", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(Properties.Resources.OperationCompletedMessage, Properties.Resources.OperationCompletedDialogTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             EnableForm();
         }
 

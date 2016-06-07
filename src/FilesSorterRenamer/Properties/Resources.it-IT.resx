@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ExecuteButton" xml:space="preserve">
-    <value>Execute</value>
+    <value>Esegui</value>
   </data>
   <data name="OperationCompletedDialogTitle" xml:space="preserve">
-    <value>Operation execution</value>
+    <value>Esecuzione operazione</value>
   </data>
   <data name="OperationCompletedMessage" xml:space="preserve">
-    <value>Operation completed</value>
+    <value>Operazione completata</value>
   </data>
   <data name="ResetButton" xml:space="preserve">
-    <value>Reset</value>
+    <value>Resetta</value>
   </data>
   <data name="SelectButton" xml:space="preserve">
-    <value>Select</value>
+    <value>Seleziona</value>
   </data>
   <data name="SelectDestinationFolderLabel" xml:space="preserve">
-    <value>Select the destination folder</value>
+    <value>Seleziona la cartella di destinazione</value>
   </data>
   <data name="SelectSourceFolderLabel" xml:space="preserve">
-    <value>Select the source folder</value>
+    <value>Seleziona la cartella sorgente</value>
   </data>
 </root>
