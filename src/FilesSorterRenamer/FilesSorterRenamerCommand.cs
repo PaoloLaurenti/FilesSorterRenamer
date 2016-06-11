@@ -2,19 +2,22 @@
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using FilesSorterRenamer.Sorting;
 
 namespace FilesSorterRenamer
 {
     internal class FilesSorterRenamerCommand
     {
-        private const string OutputFolderNamePrefix = "Output";
         private readonly string _sourceFolderPath;
         private readonly string _destinationFolderPath;
+        private readonly SortingStrategy _sortingStrategy;
+        private static readonly string[] PhotoExtensions = {"jpg", "jpeg"};
 
         internal FilesSorterRenamerCommand(FilesSorterRenamerCommandRequest request)
         {
             _sourceFolderPath = request.SourceFolderPath;
             _destinationFolderPath = request.DestinationFolderPath;
+            _sortingStrategy = request.SortingStrategy;
             OnPercentageProgressChanged = x => { };
         }
 
@@ -26,18 +29,14 @@ namespace FilesSorterRenamer
             var progressTracker = new ProgressTracker(allFilesCount, OnPercentageProgressChanged);
             var destinationFolderName = Path.GetFileName(_sourceFolderPath);
             var outputFolderPath = CreateOutputFolder(destinationFolderName);
+            var sortingStrategy = SortingStrategyFactory.GetStrategy(_sortingStrategy);
 
-            //var destinationFolderPath = Path.Combine(outputFolderPath, destinationFolderName);
-            Process(_sourceFolderPath, outputFolderPath, progressTracker);
+            Process(_sourceFolderPath, outputFolderPath, sortingStrategy, progressTracker);
         }
 
         private string CreateOutputFolder(string destinationFolderName)
         {
-            var existingDestinationFolders = Directory
-                                            .GetDirectories(_destinationFolderPath, string.Format("{0}*", destinationFolderName), SearchOption.TopDirectoryOnly)
-                                            .Select(Path.GetFileName)
-                                            .Where(x => IsAnAlreadyExistingDestinationFolder(x, destinationFolderName))
-                                            .ToArray();
+            var existingDestinationFolders = Directory.GetDirectories(_destinationFolderPath, string.Format("{0}*", destinationFolderName), SearchOption.TopDirectoryOnly).Select(Path.GetFileName).Where(x => IsAnAlreadyExistingDestinationFolder(x, destinationFolderName)).ToArray();
 
             var outputFolderPath = Path.Combine(_destinationFolderPath, destinationFolderName);
 
@@ -57,7 +56,7 @@ namespace FilesSorterRenamer
             return Regex.IsMatch(folderName, string.Format("^{0}(_[0-9]+)?$", destinationFolderName));
         }
 
-        private static void Process(string sourceFolderPath, string destinationFolderPath, ProgressTracker progressTracker)
+        private static void Process(string sourceFolderPath, string destinationFolderPath, ISortingStrategy sortingStrategy, ProgressTracker progressTracker)
         {
             var index = 1;
 
@@ -66,18 +65,22 @@ namespace FilesSorterRenamer
 
             Directory
                 .GetFiles(sourceFolderPath, "*.*", SearchOption.TopDirectoryOnly)
-                .OrderBy(x => new DirectoryInfo(x).LastWriteTimeUtc)
+                .Where(x => PhotoExtensions.Any(pe =>
+                {
+                    return string.Equals(pe, Path.GetExtension(x).Substring(1), StringComparison.InvariantCultureIgnoreCase);
+                }))
+                .OrderBy(sortingStrategy.GetDate)
                 .ToList()
                 .ForEach(x =>
-                {
-                    var destFileName = string.Format("{0}{1}", index.ToString().PadLeft(5, '0'), Path.GetExtension(x));
-                    File.Copy(x, Path.Combine(destinationFolderPath, destFileName));
-                    index++;
-                    progressTracker.TrackFileProcessed();
-                });
+                            {
+                                var destFileName = string.Format("{0}{1}", index.ToString().PadLeft(5, '0'), Path.GetExtension(x));
+                                File.Copy(x, Path.Combine(destinationFolderPath, destFileName));
+                                index++;
+                                progressTracker.TrackFileProcessed();
+                            });
 
             var subFolders = Directory.GetDirectories(sourceFolderPath, "*.*", SearchOption.TopDirectoryOnly);
-            Array.ForEach(subFolders, x => Process(x, Path.Combine(destinationFolderPath, Path.GetFileName(x)), progressTracker));
+            Array.ForEach(subFolders, x => Process(x, Path.Combine(destinationFolderPath, Path.GetFileName(x)), sortingStrategy, progressTracker));
         }
     }
 }

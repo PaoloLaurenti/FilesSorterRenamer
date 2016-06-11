@@ -4,5 +4,6 @@ namespace FilesSorterRenamer
     {
         public string SourceFolderPath { get; set; }
         public string DestinationFolderPath { get; set; }
+        public SortingStrategy SortingStrategy { get; set; }
     }
 }

@@ -61,6 +61,42 @@ namespace FilesSorterRenamer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date Accessed.
+        /// </summary>
+        public static string DateAccessed {
+            get {
+                return ResourceManager.GetString("DateAccessed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date Created.
+        /// </summary>
+        public static string DateCreated {
+            get {
+                return ResourceManager.GetString("DateCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date Modified.
+        /// </summary>
+        public static string DateModified {
+            get {
+                return ResourceManager.GetString("DateModified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date Taken.
+        /// </summary>
+        public static string DateTaken {
+            get {
+                return ResourceManager.GetString("DateTaken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Execute.
         /// </summary>
         public static string ExecuteButton {
@@ -111,6 +147,15 @@ namespace FilesSorterRenamer.Properties {
         public static string SelectDestinationFolderLabel {
             get {
                 return ResourceManager.GetString("SelectDestinationFolderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select how to sort photos.
+        /// </summary>
+        public static string SelectSortingStrategy {
+            get {
+                return ResourceManager.GetString("SelectSortingStrategy", resourceCulture);
             }
         }
         

@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DateAccessed" xml:space="preserve">
+    <value>Data ultimo accesso</value>
+  </data>
+  <data name="DateCreated" xml:space="preserve">
+    <value>Data creazione</value>
+  </data>
+  <data name="DateModified" xml:space="preserve">
+    <value>Data ultima modifica</value>
+  </data>
+  <data name="DateTaken" xml:space="preserve">
+    <value>Data acquisizione</value>
+  </data>
   <data name="ExecuteButton" xml:space="preserve">
     <value>Esegui</value>
   </data>
@@ -134,6 +146,9 @@
   </data>
   <data name="SelectDestinationFolderLabel" xml:space="preserve">
     <value>Seleziona la cartella di destinazione</value>
+  </data>
+  <data name="SelectSortingStrategy" xml:space="preserve">
+    <value>Seleziona come ordinare le foto</value>
   </data>
   <data name="SelectSourceFolderLabel" xml:space="preserve">
     <value>Seleziona la cartella sorgente</value>
